@@ -1,0 +1,41 @@
+package frc.robot.commands.drive;
+
+import frc.robot.Robot;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+public class DefaultDrive extends CommandBase{
+    public DefaultDrive() {
+        addRequirements(Robot.drivebase);
+    }
+
+    private final double distance;
+    private final int speed;
+
+    public DefaultDrive(double d, int s) {
+        this.distance = d;
+        this.speed = s;
+        addRequirements(Robot.drivebase);
+    }
+
+    @Override
+    public void initialize() {
+        Robot.drivebase.resetEncoders();
+    }
+
+    @Override
+    public void execute() {
+        Robot.drivebase.drive(speed, speed);
+    }
+
+    @Override
+    public void end(boolean i) {
+        Robot.drivebase.drive(0,0);   
+    }
+
+    @Override
+    public boolean isFinished() {
+        return Robot.drivebase.getRightEncoderDistance() >= distance;
+    }
+
+    
+}
